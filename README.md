@@ -5,4 +5,4 @@ To run this repository
 1. Begin by starting ZooKeeper server
 2. Start Kafka server
 3. Run producer.py
-4. Run consumer.py
+4. Run consumer.py (You need to download AirQualityUCI.csv file to train the model)
