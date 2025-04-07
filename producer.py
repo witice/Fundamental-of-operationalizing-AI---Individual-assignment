@@ -5,6 +5,7 @@ import pandas as pd
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
 from ucimlrepo import fetch_ucirepo
+from sklearn.model_selection import train_test_split
 
 # Setup logging
 logging.basicConfig(
@@ -26,8 +27,11 @@ except Exception as e:
     raise SystemExit("Failed to load dataset. Exiting.")  # Stop execution if dataset fails
 
 
+# Split the dataset into training and testing sets
+train_set, test_set = train_test_split(X, test_size=0.2, random_state=42)
+
 # Convert the dataset to a list of JSON records
-data_records = X.to_dict(orient="records")  # Convert DataFrame rows to dictionaries
+data_records = test_set.to_dict(orient="records")
 
 # Initialize the Kafka producer
 # - 'bootstrap_servers' defines Kafka server(s)
@@ -48,12 +52,15 @@ def send_message():
     logging.info("Starting to send messages...")
     for idx, record in enumerate(data_records):
         try:
-            future = producer.send('air_quality_data', record)
+            future = producer.send('air_quality_test_data', record)
             result = future.get(timeout=10)  # Wait for send confirmation
             logging.info(f"Message {idx+1}/{len(data_records)} sent successfully.")
         except KafkaError as e:
             logging.error(f"Failed to send message {idx+1}: {e}")
-        time.sleep(0.5)  # Simulate streaming with delay
+        #time.sleep(0.5)  # Simulate streaming with delay
+    # Signal to the consumer that all data has been sent
+    producer.send('air_quality_test_data', {'type': 'EOF'})
+    logging.info("Sent EOF signal to consumer.")
 
 if __name__ == '__main__':
     send_message()
