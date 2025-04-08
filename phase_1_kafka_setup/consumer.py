@@ -69,6 +69,7 @@ if __name__ == '__main__':
     kafka_consumer = create_consumer()
     df = consume_message(kafka_consumer)  # Start consuming messages and store in DataFrame
 
+    # Batch-streaming data, consume data by streaming in batch, and make prediction in batch
     if df is not None and not df.empty:
         try:
             # Replace -200 in specific columns with given averages

@@ -57,7 +57,7 @@ def send_message():
             logging.info(f"Message {idx+1}/{len(data_records)} sent successfully.")
         except KafkaError as e:
             logging.error(f"Failed to send message {idx+1}: {e}")
-        #time.sleep(0.5)  # Simulate streaming with delay
+        time.sleep(0.5)  # Simulate streaming with delay
     # Signal to the consumer that all data has been sent
     producer.send('air_quality_test_data', {'type': 'EOF'})
     logging.info("Sent EOF signal to consumer.")
