@@ -1884,3 +1884,5 @@
 2025-04-07 22:22:36,202 - INFO - Closing the Kafka producer with 4294967.0 secs timeout.
 2025-04-07 22:22:36,203 - INFO - <BrokerConnection client_id=kafka-python-producer-1, node_id=0 host=192.168.0.13:9092 <connected> [IPv4 ('192.168.0.13', 9092)]>: Closing connection. 
 2025-04-07 22:22:36,203 - INFO - Producer finished sending messages and closed.
+2025-04-08 19:36:44,665 - INFO - Fetching UCI dataset...
+2025-04-08 19:36:45,178 - ERROR - Error fetching dataset: Error connecting to server

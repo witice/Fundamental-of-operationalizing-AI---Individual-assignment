@@ -53,6 +53,7 @@ def consume_message(consumer):
                 # Convert list of JSON objects to DataFrame
                 df = pd.DataFrame(data_list)
                 logging.info(f"Stored {len(data_list)} messages in DataFrame")
+            
             except json.JSONDecodeError as e:
                 logging.error(f"Failed to decode message {message.value}: {e}")
     except KafkaError:
@@ -159,8 +160,6 @@ if __name__ == '__main__':
 
         except Exception as e:
             logging.exception("Error during prediction or saving results.")
-
-    #consume_message(kafka_consumer)  # Start consuming messages
 
 
 # In this script:
